@@ -46,7 +46,8 @@ pipeline {
         stage('Publish Image Artifact') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    bat "echo %PASS% | docker login -u %USER% --password-stdin"
+                    // Replaced piped layout block with explicit inline string variables to prevent token trailing spaces
+                    bat "docker login -u %USER% -p %PASS%"
                     bat "docker push %DOCKER_HUB_USER%/%IMAGE_NAME%:%IMAGE_TAG%"
                 }
             }
