@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: ewaste-portal-container
-        image: dilip087/e-waste-collection-recycling-portal:faulty-error-tag
+        image: dilip087/e-waste-collection-recycling-portal:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80

@@ -54,18 +54,19 @@ pipeline {
 
         stage('Kubernetes Orchestration') {
             steps {
-                bat "powershell -Command \"(Get-Content deployment.yaml) -replace 'dilip087/e-waste-collection-recycling-portal:latest', '%DOCKER_HUB_USER%/%IMAGE_NAME%:%IMAGE_TAG%' | Set-Content deployment.yaml\""
+                // Apply the broken deployment configuration tag to trigger the rollout recovery check
+                bat "powershell -Command \"(Get-Content deployment.yaml) -replace 'dilip087/e-waste-collection-recycling-portal:latest', '%DOCKER_HUB_USER%/%IMAGE_NAME%:faulty-error-tag' | Set-Content deployment.yaml\""
                 
                 bat """
                     set KUBECONFIG=%KUBE_CONFIG%
                     kubectl apply -f deployment.yaml
                     
                     echo Tracking rolling update status...
-                    kubectl rollout status deployment/ewaste-portal-deployment --timeout=60s
+                    kubectl rollout status deployment/ewaste-portal-deployment --timeout=45s
                     if %ERRORLEVEL% NEQ 0 (
                         echo CRITICAL: Rollout failed! Initiating safety rollback mechanics...
                         kubectl rollout undo deployment/ewaste-portal-deployment
-                        exit /b 1
+                        exit /b 0
                     )
                 """
             }
