@@ -37,24 +37,9 @@ pipeline {
             }
         }
 
-        stage('Container Compilation') {
-            steps {
-                bat "docker build -t %DOCKER_HUB_USER%/%IMAGE_NAME%:%IMAGE_TAG% ."
-            }
-        }
-
-        stage('Publish Image Artifact') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-production-token', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    bat "echo %PASS% | docker login -u %USER% --password-stdin"
-                    bat "docker push %DOCKER_HUB_USER%/%IMAGE_NAME%:%IMAGE_TAG%"
-                }
-            }
-        }
-
         stage('Kubernetes Orchestration') {
             steps {
-                // Apply the broken deployment configuration tag to trigger the rollout recovery check
+                // Intentionally inject the broken image tag to trigger the cluster recovery mechanism
                 bat "powershell -Command \"(Get-Content deployment.yaml) -replace 'dilip087/e-waste-collection-recycling-portal:latest', '%DOCKER_HUB_USER%/%IMAGE_NAME%:faulty-error-tag' | Set-Content deployment.yaml\""
                 
                 bat """
@@ -62,7 +47,7 @@ pipeline {
                     kubectl apply -f deployment.yaml
                     
                     echo Tracking rolling update status...
-                    kubectl rollout status deployment/ewaste-portal-deployment --timeout=45s
+                    kubectl rollout status deployment/ewaste-portal-deployment --timeout=30s
                     if %ERRORLEVEL% NEQ 0 (
                         echo CRITICAL: Rollout failed! Initiating safety rollback mechanics...
                         kubectl rollout undo deployment/ewaste-portal-deployment
