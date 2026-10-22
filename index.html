@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoDispose - E-Waste Collection Portal</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f7f6; color: #333; }
+        header { background: #2e7d32; color: white; padding: 20px; text-align: center; border-radius: 8px; margin-bottom: 20px; }
+        .dashboard { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+        .stat-card { flex: 1; min-width: 200px; background: white; padding: 15px; border-radius: 6px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-bottom: 4px solid #2e7d32; }
+        .stat-card.awaiting { border-color: #f57c00; }
+        .stat-card.recycling { border-color: #1976d2; }
+        .stat-card.complete { border-color: #388e3c; }
+        .stat-num { font-size: 2em; font-weight: bold; margin: 5px 0; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 25px;}
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-top: 5px solid #2e7d32; }
+        .admin-section { background: #e0f2f1; padding: 20px; border-radius: 8px; border: 1px solid #004d40; }
+        h3 { margin-top: 0; color: #2e7d32; }
+        .meta { font-size: 0.9em; margin: 5px 0; }
+        .tag { background: #e8f5e9; color: #2e7d32; padding: 3px 8px; border-radius: 4px; font-size: 0.85em; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>EcoDispose: City E-Waste Recycling Portal</h1>
+        <p>Your guide to safe, sustainable electronic waste disposal</p>
+    </header>
+
+    <h2>Processing Status Dashboard</h2>
+    <div class="dashboard">
+        <div class="stat-card">
+            <div>Items Collected</div>
+            <div class="stat-num" id="stat-collected">14,250</div>
+        </div>
+        <div class="stat-card awaiting">
+            <div>Awaiting Processing</div>
+            <div class="stat-num" id="stat-awaiting">3,120</div>
+        </div>
+        <div class="stat-card recycling">
+            <div>Under Recycling</div>
+            <div class="stat-num" id="stat-recycling">4,810</div>
+        </div>
+        <div class="stat-card complete">
+            <div>Successfully Recycled</div>
+            <div class="stat-num" id="stat-complete">6,320</div>
+        </div>
+    </div>
+
+    <h2>Collection Centres</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Downtown EcoHub</h3>
+            <p class="meta"><strong>Location:</strong> 102 Green Avenue, Central District</p>
+            <p class="meta"><strong>Accepted:</strong> <span class="tag">Mobile Phones</span> <span class="tag">Laptops</span></p>
+            <p class="meta"><strong>Schedule:</strong> Mon-Wed, 9:00 AM - 5:00 PM</p>
+            <p class="meta"><strong>Instructions:</strong> Remove all batteries and personal data before drop-off.</p>
+            <p class="meta"><strong>Status:</strong> Processing active</p>
+        </div>
+        <div class="card">
+            <h3>Metro Battery & Tech Depot</h3>
+            <p class="meta"><strong>Location:</strong> 454 Industrial Parkway</p>
+            <p class="meta"><strong>Accepted:</strong> <span class="tag">Batteries</span> <span class="tag">Mobile Phones</span></p>
+            <p class="meta"><strong>Schedule:</strong> Tue-Thu, 10:00 AM - 6:00 PM</p>
+            <p class="meta"><strong>Instructions:</strong> Tape battery terminals to prevent short-circuiting.</p>
+            <p class="meta"><strong>Status:</strong> Capacity: 65%</p>
+        </div>
+        <div class="card">
+            <h3>Silicon Valley Recycling Corp</h3>
+            <p class="meta"><strong>Location:</strong> 88 Tech Boulevard</p>
+            <p class="meta"><strong>Accepted:</strong> <span class="tag">Laptops</span> <span class="tag">Televisions</span></p>
+            <p class="meta"><strong>Schedule:</strong> Mon-Fri, 8:00 AM - 4:00 PM</p>
+            <p class="meta"><strong>Instructions:</strong> Heavy displays must be palletized or boxed.</p>
+            <p class="meta"><strong>Status:</strong> Sorting in progress</p>
+        </div>
+        <div class="card">
+            <h3>Suburban e-Cycle Point</h3>
+            <p class="meta"><strong>Location:</strong> 12 Maple Street, Northside</p>
+            <p class="meta"><strong>Accepted:</strong> <span class="tag">Mobile Phones</span> <span class="tag">Batteries</span></p>
+            <p class="meta"><strong>Schedule:</strong> Saturdays, 9:00 AM - 1:00 PM</p>
+            <p class="meta"><strong>Instructions:</strong> Residential drive-through drop-off only.</p>
+            <p class="meta"><strong>Status:</strong> Awaiting sorting batch</p>
+        </div>
+        <div class="card">
+            <h3>E-Waste Renewal Plant</h3>
+            <p class="meta"><strong>Location:</strong> Facility 4B, Outer Ring Road</p>
+            <p class="meta"><strong>Accepted:</strong> <span class="tag">Televisions</span> <span class="tag">Laptops</span> <span class="tag">Batteries</span></p>
+            <p class="meta"><strong>Schedule:</strong> Mon-Fri, 24 Hours (Commercial only)</p>
+            <p class="meta"><strong>Instructions:</strong> Corporate log sheet required upon arrival.</p>
+            <p class="meta"><strong>Status:</strong> Bulk processing line open</p>
+        </div>
+    </div>
+
+    <div class="admin-section">
+        <h3>Administrative Bulletins & Schedule Adjustments</h3>
+        <p><strong>Notice (Oct 2026):</strong> Holiday collection routes have been optimized. Downtown EcoHub will extend its hours on Thursdays to support upcoming residential tech disposal initiatives.</p>
+    </div>
+</body>
+</html>
