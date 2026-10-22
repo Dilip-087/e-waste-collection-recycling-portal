@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: ewaste-portal-container
-        image: DOCKER_HUB_USERNAME/e-waste-collection-recycling-portal:latest
+        image: dilip087/e-waste-collection-recycling-portal:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
