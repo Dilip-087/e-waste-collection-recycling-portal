@@ -9,7 +9,7 @@ pipeline {
     environment {
         DOCKER_HUB_USER = 'dilip087' 
         IMAGE_NAME      = 'e-waste-collection-recycling-portal'
-        KUBE_CONFIG     = credentials('jenkins-kubeconfig') 
+        KUBE_CONFIG     = credentials('kubernet') 
     }
 
     stages {
@@ -45,7 +45,7 @@ pipeline {
 
         stage('Publish Image Artifact') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     bat "echo %PASS% | docker login -u %USER% --password-stdin"
                     bat "docker push %DOCKER_HUB_USER%/%IMAGE_NAME%:%IMAGE_TAG%"
                 }
